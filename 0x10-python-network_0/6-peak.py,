@@ -1,0 +1,19 @@
+def find_peak(list_of_integers):
+    if not list_of_integers:
+        return None
+    
+    def binary_search_peak(arr, low, high):
+        mid = low + (high - low) // 2
+        
+        # Check if the middle element is a peak
+        if (mid == 0 or arr[mid] >= arr[mid - 1]) and (mid == len(arr) - 1 or arr[mid] >= arr[mid + 1]):
+            return arr[mid]
+        # If the middle element is less than its left neighbor, then the left half must have a peak
+        elif mid > 0 and arr[mid] < arr[mid - 1]:
+            return binary_search_peak(arr, low, mid - 1)
+        # If the middle element is less than its right neighbor, then the right half must have a peak
+        else:
+            return binary_search_peak(arr, mid + 1, high)
+    
+    return binary_search_peak(list_of_integers, 0, len(list_of_integers) - 1)
+
