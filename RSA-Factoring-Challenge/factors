@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Check if a file is provided as an argument
+if [ "$#" -ne 1 ]; then
+echo "Usage: $0 <file>"
+exit 1
+fi
+
+# Check if the file exists and is readable
+if [ ! -f "$1" ]; then
+echo "Error: File '$1' not found!"
+exit 1
+fi
+
+# Read the input file line by line
+while IFS= read -r number; do
+if [ "$number" -gt 1 ]; then
+# Factorize the number
+found=0
+for ((i=2; i*i<=number; i++)); do
+if [ $((number % i)) -eq 0 ]; then
+echo "$number=$i*$((number / i))"
+found=1
+break
+fi
+done
+
+# If no factors are found, it means the number is prime
+if [ $found -eq 0 ]; then
+echo "$number=1*$number"
+fi
+fi
+done < "$1"
+
+exit 0
