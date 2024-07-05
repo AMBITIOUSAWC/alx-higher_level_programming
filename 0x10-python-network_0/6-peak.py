@@ -1,15 +1,19 @@
-def find_peak(list_of_integers):
-    """Finds a peak in a list of unsorted integers."""
-    if not list_of_integers:
+# Write a function that finds a peak in a list of unsorted integers.
+def find_peak(lst):
+    size = len(lst)
+    if size == 0:
         return None
+    elif size == 1:
+        return lst[0]
+    elif size == 2:
+        return max(lst)
 
-    def find_peak_util(nums, low, high):
-        mid = (low + high) // 2
-        if (mid == 0 or nums[mid - 1] <= nums[mid]) and (mid == len(nums) - 1 or nums[mid + 1] <= nums[mid]):
-            return nums[mid]
-        elif mid > 0 and nums[mid - 1] > nums[mid]:
-            return find_peak_util(nums, low, mid - 1)
-        else:
-            return find_peak_util(nums, mid + 1, high)
+    mid = size // 2
+    peak = lst[mid]
 
-    return find_peak_util(list_of_integers, 0, len(list_of_integers) - 1)
+    if peak < lst[mid - 1]:
+        return find_peak(lst[:mid])
+    elif peak < lst[mid + 1]:
+        return find_peak(lst[mid + 1:])
+    else:
+        return peak
